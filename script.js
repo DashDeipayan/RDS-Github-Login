@@ -12,7 +12,11 @@ emailField.addEventListener("blur", function () {
 });
 
 const password = document.getElementById("password");
-password.addEventListener("blur", function () {
+password.addEventListener("input", function () {
+	if (password.value.length > 3) {
+		alert("Password is greater than 3 characters");
+		password.value = "";
+	}
 	mixpanel.track("Password Entered", {
 		source: "Venus Fly Trap",
 	});
