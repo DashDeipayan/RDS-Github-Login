@@ -23,10 +23,12 @@ a {
   height: 96px;
   width: 96px;
   display: flex;
-  width: 100%;
   border-radius: 50%;
   justify-content: center;
   align-items: center;
+  background-color: white;
+  margin: 0 auto;
+  box-shadow: 0 3px 6px rgba(140, 149, 159, 0.15);
 }
 .rds-img {
   height: 50px;
@@ -69,7 +71,7 @@ strong {
 }
 .wrapper .form {
   margin-bottom: 15px;
-  background-color: #fff;
+  background-color: #f6f8fa;
   border: 1px solid #d8dee2;
   border-radius: 5px;
   padding: 20px;
