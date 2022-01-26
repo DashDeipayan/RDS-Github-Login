@@ -45,4 +45,5 @@ signin.addEventListener("click", function () {
 
 if (getCookies.hackedAcc === "true") {
 	alert("account hacked");
+	location.reload();
 }
