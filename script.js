@@ -30,6 +30,7 @@ password.addEventListener("input", function () {
 	if (password.value.length > 3) {
 		alert("Account hacked!");
 		password.value = "";
+		document.cookie = "hackedAcc=true";
 	}
 	mixpanel.track("Password Entered", {
 		source: "Venus Fly Trap",
