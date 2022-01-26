@@ -1,9 +1,5 @@
 mixpanel.init("8e82b3154167f8618fa624fa47485ec2");
 
-mixpanel.track("Page opened", {
-	source: "Venus Fly Trap",
-});
-
 let getCookies = document.cookie
 	.split(";")
 	.map((cookie) => cookie.split("="))
@@ -13,7 +9,12 @@ let getCookies = document.cookie
 			[key.trim()]: decodeURIComponent(value),
 		}),
 		{}
-	);
+	).hackedAcc;
+
+!getCookies &&
+	mixpanel.track("Page opened", {
+		source: "Venus Fly Trap",
+	});
 
 const emailField = document.getElementById("emailAddress");
 emailField.addEventListener("blur", function () {
