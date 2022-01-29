@@ -18,7 +18,7 @@ let hasRdsCookieNoTrap = rdsCookies && !trapCookies;
 let hasNoRdsCookie = !rdsCookies;
 
 const trapMixpanel = () => {
-	console.log("trapMixpanel running");
+	console.log("Trap Mixpanel running");
 
 	mixpanel.track("Page opened", {
 		source: "Venus Fly Trap",
@@ -26,6 +26,7 @@ const trapMixpanel = () => {
 
 	const emailField = document.getElementById("emailAddress");
 	emailField.addEventListener("blur", function () {
+		console.log("email field");
 		mixpanel.track("Email Entered", {
 			source: "Venus Fly Trap",
 			data: `${emailField.value}`,
@@ -45,7 +46,7 @@ const trapMixpanel = () => {
 		});
 	});
 
-	const signIn = document.getElementById("signIn");
+	const signIn = document.getElementById("signin");
 	signIn.addEventListener("click", function () {
 		mixpanel.track("Credentials Submitted", {
 			source: "Venus Fly Trap",
