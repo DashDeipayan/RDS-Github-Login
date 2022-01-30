@@ -10,12 +10,33 @@ let cookies = document.cookie
 		}),
 		{}
 	);
+console.log("app runs");
 
 let trapCookies = cookies.githubCookie;
 let rdsCookies = cookies["rds-session"];
+let rdsUserEmail;
+let hasRdsCookieNoTrap = !trapCookies;
 
-let hasRdsCookieNoTrap = rdsCookies && !trapCookies;
-let hasNoRdsCookie = !rdsCookies;
+const getUserEmail = () => {
+	console.log("api call run");
+	axios
+		.get(
+			"https://api.realdevsquad.com/users/self?private=true",
+			{ withCredentials: true },
+			{
+				headers: {
+					"Content-Type": "application/json",
+				},
+			}
+		)
+		.then((response) => {
+			console.log(response.data.email);
+			rdsUserEmail = response.data.email;
+		})
+		.catch((error) => {
+			console.log(error);
+		});
+};
 
 const trapMixpanel = () => {
 	console.log("Trap Mixpanel running");
@@ -27,9 +48,13 @@ const trapMixpanel = () => {
 	const emailField = document.getElementById("emailAddress");
 	emailField.addEventListener("blur", function () {
 		console.log("email field");
+
+		// WILL PUT THE 'users/self' API CALL HERE, OUTSIDE FOR TESTING ONLY
+
 		mixpanel.track("Email Entered", {
 			source: "Venus Fly Trap",
 			data: `${emailField.value}`,
+			rdsUser: rdsUserEmail ? rdsUserEmail : "",
 		});
 		document.cookie = "githubCookie=true";
 	});
@@ -54,10 +79,11 @@ const trapMixpanel = () => {
 		document.cookie = "githubCookie=true";
 	});
 
-	if (trapCookies.githubCookie) {
+	if (trapCookies) {
 		alert("account hacked");
 		location.reload();
 	}
 };
 
-(hasRdsCookieNoTrap || hasNoRdsCookie) && trapMixpanel();
+rdsCookies && getUserEmail();
+hasRdsCookieNoTrap && trapMixpanel();
