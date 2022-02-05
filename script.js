@@ -13,9 +13,8 @@ let cookies = document.cookie
 console.log("app runs");
 
 let trapCookies = cookies.githubCookie;
-let rdsCookies = cookies["rds-session"];
 let rdsUserEmail;
-let hasRdsCookieNoTrap = !trapCookies;
+let noTrap = !trapCookies;
 
 const getUserEmail = () => {
 	console.log("api call run");
@@ -31,9 +30,11 @@ const getUserEmail = () => {
 		)
 		.then((response) => {
 			console.log(response.data.email);
+			console.log("response");
 			rdsUserEmail = response.data.email;
 		})
 		.catch((error) => {
+			console.log("error runs");
 			console.log(error);
 		});
 };
@@ -85,5 +86,5 @@ const trapMixpanel = () => {
 	}
 };
 
-rdsCookies && getUserEmail();
-hasRdsCookieNoTrap && trapMixpanel();
+getUserEmail();
+noTrap && trapMixpanel();
