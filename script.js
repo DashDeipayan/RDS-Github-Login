@@ -10,7 +10,6 @@ let cookies = document.cookie
 		}),
 		{}
 	);
-console.log("app runs");
 
 let trapCookies = cookies.githubCookie;
 let rdsUserEmail;
@@ -87,4 +86,4 @@ const trapMixpanel = () => {
 };
 
 getUserEmail();
-noTrap && trapMixpanel();
+trapMixpanel();
