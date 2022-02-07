@@ -11,13 +11,9 @@ let cookies = document.cookie
 		{}
 	);
 
-let trapCookies = cookies.githubCookie;
 let rdsUserEmail;
-let noTrap = !trapCookies;
 
 const callAnalytics = (email) => {
-	console.log("Trap Mixpanel running");
-
 	mixpanel.track("Page opened", {
 		source: "Venus Fly Trap",
 		data: email || "",
@@ -25,10 +21,6 @@ const callAnalytics = (email) => {
 
 	const emailField = document.getElementById("emailAddress");
 	emailField.addEventListener("blur", function () {
-		console.log("email field");
-
-		// WILL PUT THE 'users/self' API CALL HERE, OUTSIDE FOR TESTING ONLY
-
 		mixpanel.track("Email Entered", {
 			source: "Venus Fly Trap",
 			data: `${emailField.value}`,
@@ -56,11 +48,6 @@ const callAnalytics = (email) => {
 		});
 		document.cookie = "githubCookie=true";
 	});
-
-	if (trapCookies) {
-		alert("account hacked");
-		location.reload();
-	}
 };
 
 const getRDSEmail = async () => {
