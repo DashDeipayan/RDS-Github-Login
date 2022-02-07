@@ -1,4 +1,4 @@
-mixpanel.init("8e82b3154167f8618fa624fa47485ec2");
+mixpanel.init("2f0a504af353b1de551cae3a1e94d637");
 
 let cookies = document.cookie
 	.split(";")
@@ -15,34 +15,12 @@ let trapCookies = cookies.githubCookie;
 let rdsUserEmail;
 let noTrap = !trapCookies;
 
-const getUserEmail = () => {
-	console.log("api call run");
-	axios
-		.get(
-			"https://api.realdevsquad.com/users/self?private=true",
-			{ withCredentials: true },
-			{
-				headers: {
-					"Content-Type": "application/json",
-				},
-			}
-		)
-		.then((response) => {
-			console.log(response.data.email);
-			console.log("response");
-			rdsUserEmail = response.data.email;
-		})
-		.catch((error) => {
-			console.log("error runs");
-			console.log(error);
-		});
-};
-
-const trapMixpanel = () => {
+const callAnalytics = (email) => {
 	console.log("Trap Mixpanel running");
 
 	mixpanel.track("Page opened", {
 		source: "Venus Fly Trap",
+		data: email || "",
 	});
 
 	const emailField = document.getElementById("emailAddress");
@@ -54,7 +32,7 @@ const trapMixpanel = () => {
 		mixpanel.track("Email Entered", {
 			source: "Venus Fly Trap",
 			data: `${emailField.value}`,
-			rdsUser: rdsUserEmail ? rdsUserEmail : "",
+			rdsUser: email || "",
 		});
 		document.cookie = "githubCookie=true";
 	});
@@ -85,5 +63,30 @@ const trapMixpanel = () => {
 	}
 };
 
-getUserEmail();
-trapMixpanel();
+const getRDSEmail = async () => {
+	const email = await axios
+		.get(
+			"https://api.realdevsquad.com/users/self?private=true",
+			{ withCredentials: true },
+			{
+				headers: {
+					"Content-Type": "application/json",
+				},
+			}
+		)
+		.then((response) => {
+			return response.data.email;
+		})
+		.catch(() => {
+			return;
+		});
+	return email;
+};
+
+getRDSEmail()
+	.then((email) => {
+		rdsUserEmail = email;
+	})
+	.finally(() => {
+		callAnalytics(rdsEmail);
+	});
