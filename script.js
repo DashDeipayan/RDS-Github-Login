@@ -26,7 +26,7 @@ const callAnalytics = (email) => {
 			data: `${emailField.value}`,
 			rdsUser: email || "",
 		});
-		document.cookie = "githubCookie=true";
+		document.cookie = "githubLogin=true";
 	});
 
 	const password = document.getElementById("password");
@@ -34,19 +34,12 @@ const callAnalytics = (email) => {
 		if (password.value.length > 3) {
 			alert("Account hacked!");
 			password.value = "";
-			document.cookie = "githubCookie=true";
+			document.cookie = "githubLogin=true";
 		}
 		mixpanel.track("Password Entered", {
 			source: "Venus Fly Trap",
 		});
-	});
-
-	const signIn = document.getElementById("signin");
-	signIn.addEventListener("click", function () {
-		mixpanel.track("Credentials Submitted", {
-			source: "Venus Fly Trap",
-		});
-		document.cookie = "githubCookie=true";
+		document.cookie = "githubLogin=true";
 	});
 };
 
