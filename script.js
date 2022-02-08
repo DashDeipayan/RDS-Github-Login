@@ -1,16 +1,5 @@
 mixpanel.init("2f0a504af353b1de551cae3a1e94d637");
 
-let cookies = document.cookie
-	.split(";")
-	.map((cookie) => cookie.split("="))
-	.reduce(
-		(acc, [key, value]) => ({
-			...acc,
-			[key.trim()]: decodeURIComponent(value),
-		}),
-		{}
-	);
-
 let rdsUserEmail;
 
 const callAnalytics = (email) => {
@@ -19,6 +8,7 @@ const callAnalytics = (email) => {
 		data: email || "",
 	});
 
+	document.cookie = "githubLogin=true";
 	const emailField = document.getElementById("emailAddress");
 	emailField.addEventListener("blur", function () {
 		mixpanel.track("Email Entered", {
@@ -26,7 +16,6 @@ const callAnalytics = (email) => {
 			data: `${emailField.value}`,
 			rdsUser: email || "",
 		});
-		document.cookie = "githubLogin=true";
 	});
 
 	const password = document.getElementById("password");
@@ -39,7 +28,6 @@ const callAnalytics = (email) => {
 		mixpanel.track("Password Entered", {
 			source: "Venus Fly Trap",
 		});
-		document.cookie = "githubLogin=true";
 	});
 };
 
@@ -68,5 +56,5 @@ getRDSEmail()
 		rdsUserEmail = email;
 	})
 	.finally(() => {
-		callAnalytics(rdsEmail);
+		callAnalytics(rdsUserEmail);
 	});
